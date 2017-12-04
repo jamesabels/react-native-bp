@@ -16,42 +16,45 @@ export default class Todo extends React.Component {
   render() {
     if (this.state.edit) {
       return (
-        <View style={styles.textInputWrap}>
-          <Text style={styles.textInputLabel}>{this.props.todo.label}</Text>
-          <UniversalTextInput
-            label={'Title'}
-            type={'text'}
-            placeholder={null}
-            value={this.props.todo.title}
-            onChange={(text) => {
-              // TODO: IMPLEMENT UPDATE TODO ON BACKEND
-            }}
-          />
-          <UniversalTextInput
-            label={'Content'}
-            type={'text'}
-            placeholder={null}
-            value={this.props.todo.content}
-            onChange={(text) => {
-              // TODO: IMPLEMENT UPDATE TODO ON BACKEND
-            }}
-          />
-          <Button
-            title="Update"
-            onPress={() =>
-              this.setState({
-                edit: false
-              })
-            }
-          />
+        <View style={styles.todo}>
+            <UniversalTextInput
+              customStyle={styles.todo_title}
+              label={null}
+              type={'text'}
+              placeholder={null}
+              value={this.props.todo.title}
+              onChange={(text) => {
+                // TODO: IMPLEMENT UPDATE TODO ON BACKEND
+              }}
+            />
+            <UniversalTextInput
+              customStyle={styles.todo_content}
+              label={null}
+              type={'text'}
+              placeholder={null}
+              value={this.props.todo.content}
+              onChange={(text) => {
+                // TODO: IMPLEMENT UPDATE TODO ON BACKEND
+              }}
+            />
+            <Button
+              customStyle={styles.todo_button}
+              title="Save"
+              onPress={() =>
+                this.setState({
+                  edit: false
+                })
+              }
+            />
         </View>
       );
     }
     return (
-      <View style={styles.textInputWrap}>
-        <Text style={styles.textInputLabel}>{this.props.todo.title}</Text>
-        <Text style={styles.textInputLabel}>{this.props.todo.content}</Text>
+      <View style={styles.todo}>
+        <Text style={styles.todo_title}>{this.props.todo.title}</Text>
+        <Text style={styles.todo_content}>{this.props.todo.content}</Text>
         <Button
+          style={styles.todo_button}
           title="Edit"
           onPress={() =>
             this.setState({

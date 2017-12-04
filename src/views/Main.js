@@ -42,15 +42,14 @@ export default class LoginScreen extends React.Component {
     }
     return (
       <View style={styles.container}>
-        <Text>Main Screen</Text>
-        <FlatList
-          data={this.state.todos}
-          keyExtractor={this._keyExtractor}
-          renderItem={({item}) => {
-            return <Todo todo={item}/>
-          }}
-        />
+          <FlatList
+            contentContainerStyle={styles.todoList}
+            data={this.state.todos}
+            keyExtractor={this._keyExtractor}
+            renderItem={({item}) => <Todo todo={item}/>}
+          />
         <Button
+          style={{flex: 1}}
           title="Logout"
           onPress={() => {
             Logout(this.state.emailInput, this.state.passwordInput);

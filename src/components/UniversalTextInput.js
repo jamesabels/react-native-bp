@@ -18,12 +18,19 @@ export default class UniversalTextInput extends React.Component {
     }
   }
 
+  _renderLabel (label) {
+    if (label) {
+      return <Text style={styles.textInputLabel}>{label}</Text>
+    } else {
+      return
+    }
+  }
   render() {
     return (
-      <View style={styles.textInputWrap}>
-        <Text style={styles.textInputLabel}>{this.props.label}</Text>
+      <View style={{alignSelf: 'stretch'}}>
+        {this._renderLabel(this.props.label)}
         <TextInput
-          style={styles.textInput}
+          style={[styles.textInput, this.props.customStyle]}
           keyboardType={this._getKeyboardType(this.props.type || 'default')}
           secureTextEntry={this.props.secure || false}
           placeholder={this.props.placeholder}
