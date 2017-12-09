@@ -26,8 +26,19 @@ export default class Todo extends React.Component {
     super(props)
     this.state = {
       edit: false,
-      title: null
+      title: null,
+      titleInput: null,
+      contentInput: null
     }
+  }
+  componentDidMount () {
+    this.setState({
+      titleInput: this.props.todo.title,
+      contentInput: this.props.todo.content
+    })
+  }
+  _updateTodo () {
+    // Impliment the update todo logic from the backend
   }
   _toggleEdit (value) {
     this.setState({
@@ -47,10 +58,8 @@ export default class Todo extends React.Component {
               label={'Title'}
               type={'text'}
               placeholder={null}
-              value={this.props.todo.title}
-              onChange={(text) => {
-                // TODO: IMPLEMENT UPDATE TODO ON BACKEND
-              }}
+              value={this.state.titleInput}
+              onChange={(text) => this.setState({ titleInput: text })}
             />
           </CardItem>
           <CardItem>
@@ -59,10 +68,8 @@ export default class Todo extends React.Component {
               label={'Content'}
               type={'text'}
               placeholder={null}
-              value={this.props.todo.content}
-              onChange={(text) => {
-                // TODO: IMPLEMENT UPDATE TODO ON BACKEND
-              }}
+              value={this.state.contentInput}
+              onChange={(text) => this.setState({ contentInput: text })}
             />
           </CardItem>
             <Button 
