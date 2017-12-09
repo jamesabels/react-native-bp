@@ -2,8 +2,10 @@ import React from 'react';
 import styles from '../styles/style';
 import { View } from 'react-native';
 
-import { 
-Icon, 
+import {
+Card,
+CardItem,
+Icon,
 ListItem, 
 CheckBox, 
 Text, 
@@ -27,9 +29,9 @@ export default class Todo extends React.Component {
       title: null
     }
   }
-  _toggleEdit () {
+  _toggleEdit (value) {
     this.setState({
-      edit: true
+      edit: value
     })
   }
   _completeTodo () {
@@ -38,10 +40,11 @@ export default class Todo extends React.Component {
   render() {
     if (this.state.edit) {
       return (
-        <View style={styles.todo}>
-            <UniversalTextInput
-              customStyle={styles.todo_title}
-              label={null}
+        <Card style={{ marginBottom: 20}}>
+          <CardItem header>
+          <UniversalTextInput
+              customStyle={{ width: 270, alignSelf: 'center' }}
+              label={'Title'}
               type={'text'}
               placeholder={null}
               value={this.props.todo.title}
@@ -49,9 +52,11 @@ export default class Todo extends React.Component {
                 // TODO: IMPLEMENT UPDATE TODO ON BACKEND
               }}
             />
-            <UniversalTextInput
-              customStyle={styles.todo_content}
-              label={null}
+          </CardItem>
+          <CardItem>
+          <UniversalTextInput
+              customStyle={{ width: 270,  alignSelf: 'center' }}
+              label={'Content'}
               type={'text'}
               placeholder={null}
               value={this.props.todo.content}
@@ -59,16 +64,16 @@ export default class Todo extends React.Component {
                 // TODO: IMPLEMENT UPDATE TODO ON BACKEND
               }}
             />
-            <Button
-              customStyle={styles.todo_button}
-              title="Save"
-              onPress={() =>
-                this.setState({
-                  edit: false
-                })
-              }
-            />
-        </View>
+          </CardItem>
+            <Button 
+              full
+              transparent
+              onPress={() => this._toggleEdit(false)}
+            >
+              <Icon name={'checkmark'} style={{fontSize: 60, alignSelf: 'center' }} />
+              {/* <Text style={{fontSize: 20, textAlign: 'center' }}>Save</Text> */}
+            </Button>
+        </Card>
       );
     }
     return (
@@ -84,9 +89,9 @@ export default class Todo extends React.Component {
             <Col>
               <Button
                 transparent
-                onPress={() => this._toggleEdit()}
+                onPress={() => this._toggleEdit(true)}
               >
-                <Icon name={'open'}/>
+                <Icon name={'open'} />
               </Button>
             </Col>
             </Right>

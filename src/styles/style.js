@@ -46,16 +46,12 @@ export default styles = StyleSheet.create({
     alignSelf: "stretch",
   },
   todo: {
-    flex: 1,
-    flexDirection: 'row',  // main axis
-    justifyContent: 'flex-start', // main axis
-    alignItems: 'center', // cross axis
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: 18,
-    paddingRight: 16,
-    marginLeft: 14,
-    marginRight: 14,
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 10,
+    paddingRight: 0,
+    marginLeft: 3,
+    marginRight: 3,
     marginTop: 0,
     marginBottom: 10,
     backgroundColor: 'white',
