@@ -1,6 +1,20 @@
 import React from 'react';
 import styles from '../styles/style';
-import { Text, View, Button } from 'react-native';
+import { View } from 'react-native';
+
+import { 
+Icon, 
+ListItem, 
+CheckBox, 
+Text, 
+Body, 
+Button,
+Left, 
+Right,
+Grid,
+Row,
+Col 
+} from 'native-base';
 
 // Import custom components
 import UniversalTextInput from './UniversalTextInput';
@@ -12,6 +26,14 @@ export default class Todo extends React.Component {
       edit: false,
       title: null
     }
+  }
+  _toggleEdit () {
+    this.setState({
+      edit: true
+    })
+  }
+  _completeTodo () {
+    console.log('Todo Complete')
   }
   render() {
     if (this.state.edit) {
@@ -50,19 +72,26 @@ export default class Todo extends React.Component {
       );
     }
     return (
-      <View style={styles.todo}>
-        <Text style={styles.todo_title}>{this.props.todo.title}</Text>
-        <Text style={styles.todo_content}>{this.props.todo.content}</Text>
-        <Button
-          style={styles.todo_button}
-          title="Edit"
-          onPress={() =>
-            this.setState({
-              edit: true
-            })
-          }
-        />
-      </View>
+      <ListItem style={styles.todo} >
+        <CheckBox checked={false} onPress={() => this._completeTodo()} />
+          <Grid>
+            <Left>
+            <Col>
+              <Text style={{ alignSelf: 'flex-start' }}>{this.props.todo.title}</Text>
+            </Col>
+            </Left>
+            <Right>
+            <Col>
+              <Button
+                transparent
+                onPress={() => this._toggleEdit()}
+              >
+                <Icon name={'open'}/>
+              </Button>
+            </Col>
+            </Right>
+          </Grid>
+      </ListItem>
     );
   }
 }

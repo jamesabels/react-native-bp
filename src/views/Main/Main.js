@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from '../../styles/style';
-import { Text, View, Button, Image, FlatList } from 'react-native';
+import { View, FlatList, Image } from 'react-native';
+import { Text, Container, Button } from 'native-base';
 
 // Import Custom Components
 import Todo from '../../components/Todo.js';
@@ -41,7 +42,7 @@ export default class LoginScreen extends React.Component {
       return <Text>{'Loading...'}</Text>
     }
     return (
-      <View style={styles.container}>
+      <Container padder>
           <FlatList
             contentContainerStyle={styles.todoList}
             data={this.state.todos}
@@ -49,14 +50,16 @@ export default class LoginScreen extends React.Component {
             renderItem={({item}) => <Todo todo={item}/>}
           />
         <Button
-          style={{flex: 1}}
-          title="Logout"
+          transparent
+          style={{ alignSelf: 'center' }}
           onPress={() => {
             Logout(this.state.emailInput, this.state.passwordInput);
             this.props.navigation.dispatch(Navigation.reset(0, 'Login'));
           }}
-        />
-      </View>
+        >
+        <Text>Logout</Text>
+        </Button>
+      </Container>
     );
   }
 }
