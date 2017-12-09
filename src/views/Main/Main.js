@@ -1,13 +1,13 @@
 import React from 'react';
-import styles from '../styles/style';
+import styles from '../../styles/style';
 import { Text, View, Button, Image, FlatList } from 'react-native';
 
 // Import Custom Components
-import Todo from '../components/Todo.js';
+import Todo from '../../components/Todo.js';
 
 // Import logic
-import { State, Logout, GetMe } from "../libs/api";
-import Navigation from "../libs/navigation";
+import { State, Logout, GetMe } from "../../libs/api";
+import Navigation from "../../libs/navigation";
 
 export default class LoginScreen extends React.Component {
   constructor(props) {

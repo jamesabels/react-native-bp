@@ -1,23 +1,25 @@
-import React from 'react';
-import {Login, State} from './src/libs/api'
-import { StackNavigator } from 'react-navigation';
+import React, { Component } from "react";
 
-// Import Screens
-import LoginScreen from './src/views/Login.js';
-import RegisterScreen from './src/views/Register.js';
-import MainScreen from './src/views/Main.js';
-import styles from "./src/styles/style.js";
+// Import screens
+import LoginScreen from "./src/views/Login/index.js";
 
+// Import logic
+import { State } from './src/libs/api.js';
 
-const Router = StackNavigator({
-  Home: { screen: LoginScreen },
-  Login: { screen: LoginScreen },
-  Register: { screen: RegisterScreen },
-  Main: { screen: MainScreen }
-});
-
-export default class App extends React.Component {
+export default class AwesomeApp extends Component {
+  constructor() {
+    super();
+    this.state = {
+      isReady: false
+    };
+  }
+  async componentWillMount() {
+    this.setState({ isReady: true });
+  }
   render() {
-    return <Router screenProps={State} />;
+    if (!this.state.isReady) {
+      return <h1>Loading...</h1>;
+    }
+    return <LoginScreen screenProps={State} />;
   }
 }

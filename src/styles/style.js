@@ -10,19 +10,21 @@ export default styles = StyleSheet.create({
     backgroundColor: 'whitesmoke'
   },
   brand: {
+    alignSelf: 'center',
     color: 'grey',
     marginBottom: 20,
     fontSize: 20,
     fontFamily: 'Helvetica'
   },
   brandImage: {
+    alignSelf: 'center',
     width: 100,
     height: 100
   },
   loginForm: {
     flex: 1,
     alignItems: 'center',
-    marginTop: 75
+    marginTop: 10
   },
   textInputWrap: {
     marginTop: 5,

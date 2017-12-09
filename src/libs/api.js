@@ -12,8 +12,8 @@ const client = new GraphQLClient('http://localhost:8080/graphql',{
 
 export function Login (email, password) {
   let query = `
-  mutation UserLogin ($user: UserLoginInput) {
-    login(user: $user) {
+  mutation UserLogin ($user: UserLogin) {
+    userLogin(user: $user) {
       id
       username
       email
@@ -32,7 +32,7 @@ export function Login (email, password) {
 
   return client.request(query, vars)
     .then(data => {
-      State.token = data.login.token;
+      State.token = data.userLogin.token;
       State.isFetching = false;
     })
 }
@@ -45,8 +45,8 @@ export function Logout () {
 
 export function Register (username, email, password) {
   let query = `
-  mutation UserRegister ($user: UserRegisterInput) {
-    register(user: $user) {
+  mutation UserRegister ($user: UserRegister) {
+    userRegister(user: $user) {
       id
       username
       email
@@ -66,8 +66,8 @@ export function Register (username, email, password) {
 
   client.request(query, vars)
     .then(data => {
-      State.user = GetMe(data.register.token);
-      State.token = data.register.token;
+      State.user = GetMe(data.userRegister.token);
+      State.token = data.userRegister.token;
       State.isFetching = false;
     })
     .then(data => { console.log(State.user) })
