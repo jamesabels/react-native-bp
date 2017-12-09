@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from '../styles/style';
-import { Text, View, Button, TextInput } from 'react-native';
+import { View } from 'react-native';
+import { Input, Text } from 'native-base';
 
 export default class UniversalTextInput extends React.Component {
   _getKeyboardType (type) {
@@ -27,9 +28,9 @@ export default class UniversalTextInput extends React.Component {
   }
   render() {
     return (
-      <View style={{alignSelf: 'stretch'}}>
+      <View style={{ alignSelf: 'stretch' }}>
         {this._renderLabel(this.props.label)}
-        <TextInput
+        <Input
           style={[styles.textInput, this.props.customStyle]}
           keyboardType={this._getKeyboardType(this.props.type || 'default')}
           secureTextEntry={this.props.secure || false}

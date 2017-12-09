@@ -71,7 +71,6 @@ export default class Todo extends React.Component {
               onPress={() => this._toggleEdit(false)}
             >
               <Icon name={'checkmark'} style={{fontSize: 60, alignSelf: 'center' }} />
-              {/* <Text style={{fontSize: 20, textAlign: 'center' }}>Save</Text> */}
             </Button>
         </Card>
       );
