@@ -11,7 +11,7 @@ export const State = {
   todos: null
 };
 
-const client = new GraphQLClient('http://localhost:8080/graphql',{
+const client = new GraphQLClient('http://10.0.0.3:8080/graphql',{
 });
 
 export function userLogin (email, password) {
