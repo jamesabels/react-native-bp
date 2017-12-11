@@ -23,7 +23,7 @@ import {
 import UniversalTextInput from '../../components/UniversalTextInput.js';
 
 // Import logic
-import { Register } from "../../libs/api";
+import { userRegister } from "../../libs/api";
 
 export default class RegisterScreen extends React.Component {
   constructor(props) {
@@ -34,9 +34,6 @@ export default class RegisterScreen extends React.Component {
       passwordInput: 'test'
     }
   }
-  static navigationOptions = {
-    title: 'Register',
-  };
   render() {
     return (
       <Container>
@@ -68,7 +65,7 @@ export default class RegisterScreen extends React.Component {
               transparent
               title="Register"
               onPress={() =>
-                Register(
+                userRegister(
                   this.state.usernameInput,
                   this.state.emailInput,
                   this.state.passwordInput

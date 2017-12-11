@@ -26,7 +26,7 @@ import UniversalTextInput from '../../components/UniversalTextInput.js';
 import styles from '../../styles/style';
 
 // Import logic
-import { State, Login } from "../../libs/api";
+import { State, userLogin } from "../../libs/api";
 import Navigation from "../../libs/navigation";
 
 export default class LoginScreen extends React.Component {
@@ -37,9 +37,6 @@ export default class LoginScreen extends React.Component {
       passwordInput: 'stevedavethebest'
     }
   }
-  static navigationOptions = {
-    title: 'Login',
-  };
   render() {
     return (
       <Container>
@@ -66,7 +63,7 @@ export default class LoginScreen extends React.Component {
               style={{ marginTop: 20, alignSelf: "center" }}
               transparent
               onPress={() => {
-                Login(this.state.emailInput, this.state.passwordInput)
+                userLogin(this.state.emailInput, this.state.passwordInput)
                   .then((data) => this.props.navigation.dispatch(Navigation.reset(0, 'Main')))
               }}>
               <Text>Login</Text>

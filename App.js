@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Root } from 'native-base';
 
 // Import screens
 import LoginScreen from "./src/views/Login/index.js";
@@ -20,6 +21,10 @@ export default class AwesomeApp extends Component {
     if (!this.state.isReady) {
       return <h1>Loading...</h1>;
     }
-    return <LoginScreen screenProps={State} />;
+  return (
+    <Root>
+      <LoginScreen screenProps={State} /> 
+    </Root>
+  );
   }
 }

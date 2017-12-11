@@ -21,10 +21,14 @@ Col
 // Import custom components
 import UniversalTextInput from './UniversalTextInput';
 
+// Import Logic
+import { State, updateTodo, removeTodo, addTodo, getTodos, getMe } from '../libs/api.js'
+
 export default class Todo extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      complete: false,
       edit: false,
       title: null,
       titleInput: null,
@@ -35,18 +39,33 @@ export default class Todo extends React.Component {
     this.setState({
       titleInput: this.props.todo.title,
       contentInput: this.props.todo.content
-    })
+    });
+    if (this.props.todo.edit) {
+      this.setState({
+        edit: this.props.todo.edit
+      });
+    }
   }
-  _updateTodo () {
-    // Impliment the update todo logic from the backend
+  _updateTodo (todo, token) {
+    console.log('TODO...', todo);
+    removeTodo(todo.id)
+      .then(data => {
+        addTodo(this.state.titleInput, this.state.contentInput, State.user.id);
+        State.user.todos = getTodos(State.token);
+      })
+    this._toggleEdit(false);
   }
   _toggleEdit (value) {
     this.setState({
       edit: value
-    })
+    });
   }
-  _completeTodo () {
-    console.log('Todo Complete')
+  _completeTodo (todo, token) {
+    this.setState({
+      complete: true
+    });
+    removeTodo(todo.id);
+    State.user.todos = getTodos(State.token);
   }
   render() {
     if (this.state.edit) {
@@ -75,7 +94,7 @@ export default class Todo extends React.Component {
             <Button 
               full
               transparent
-              onPress={() => this._toggleEdit(false)}
+              onPress={() => this._updateTodo(this.props.todo, State.token)}
             >
               <Icon name={'checkmark'} style={{fontSize: 60, alignSelf: 'center' }} />
             </Button>
@@ -83,8 +102,8 @@ export default class Todo extends React.Component {
       );
     }
     return (
-      <ListItem style={styles.todo} >
-        <CheckBox checked={false} onPress={() => this._completeTodo()} />
+      <ListItem style={styles.todo}>
+        <CheckBox checked={this.state.complete} onPress={() => this._completeTodo(this.props.todo, State.token)} />
           <Grid>
             <Left>
             <Col>

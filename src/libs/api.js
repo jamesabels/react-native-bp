@@ -1,5 +1,9 @@
 import { GraphQLClient } from 'graphql-request'
 
+// Import Queries
+import { UserLogin, UserRegister, UserRemove, GetMe, GetUser, GetUsers } from './queries/auth.js';
+import { AddTodo, RemoveTodo, UpdateTodo, GetTodo, GetTodos } from './queries/todos.js';
+
 export const State = {
   isFetching: false,
   user: null,
@@ -10,17 +14,7 @@ export const State = {
 const client = new GraphQLClient('http://localhost:8080/graphql',{
 });
 
-export function Login (email, password) {
-  let query = `
-  mutation UserLogin ($user: UserLogin) {
-    userLogin(user: $user) {
-      id
-      username
-      email
-      token
-    } 
-  }`;
-
+export function userLogin (email, password) {
   let vars = {
     user: {
       email,
@@ -30,30 +24,25 @@ export function Login (email, password) {
 
   State.isFetching = true;
 
-  return client.request(query, vars)
+  return client.request(UserLogin, vars)
     .then(data => {
+      State.user = {
+        id: data.userLogin.id,
+        username: data.userLogin.username,
+        todos: data.userLogin.todos
+      },
       State.token = data.userLogin.token;
       State.isFetching = false;
     })
 }
 
-export function Logout () {
+export function userLogout () {
   State.user = null;
   State.token = null;
   State.todos = null;
 }
 
-export function Register (username, email, password) {
-  let query = `
-  mutation UserRegister ($user: UserRegister) {
-    userRegister(user: $user) {
-      id
-      username
-      email
-      token
-    } 
-  }`;
-
+export function userRegister (username, email, password) {
   let vars = {
     user: {
       username,
@@ -64,7 +53,7 @@ export function Register (username, email, password) {
 
   State.isFetching = true;
 
-  client.request(query, vars)
+  client.request(UserRegister, vars)
     .then(data => {
       State.user = GetMe(data.userRegister.token);
       State.token = data.userRegister.token;
@@ -73,31 +62,62 @@ export function Register (username, email, password) {
     .then(data => { console.log(State.user) })
 }
 
-export function GetMe (token) {
-  let query = `
-  query GetMe ($token: String!) {
-    viewer(token: $token) {
-      me {
-        id
-        username
-        email
-        token
-        todos {
-          id
-          title
-          content
-          user {
-            id
-            username
-          }
-        }
-      }
-    }
-  }`;
-
+export function getMe (token) {
   let vars = {
     token
   };
 
-  return client.request(query, vars)
+  return client.request(GetMe, vars)
+}
+
+export function addTodo (title, content, user) {
+  let vars = {
+    todo: {
+      title,
+      content,
+      user
+    }
+  };
+
+  return client.request(AddTodo, vars);
+}
+
+export function updateTodo (id, title, content, user) {
+  let vars = {
+    todo: {
+      id,
+      title,
+      content,
+      user
+    }
+  };
+
+  return client.request(UpdateTodo, vars);
+}
+
+export function removeTodo (id) {
+  let vars = {
+    todo: {
+      id
+    }
+  };
+
+  return client.request(RemoveTodo, vars)
+}
+
+export function getTodo (token, id) {
+  let vars = {
+    token,
+    id
+  };
+
+  return client.request(GetTodo, vars);
+}
+
+export function getTodos (token) {
+  let vars = {
+    token
+  };
+
+  return client.request(GetTodos, vars);
 }
