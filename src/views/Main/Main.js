@@ -16,7 +16,7 @@ Icon
 import Todo from '../../components/Todo.js';
 
 // Import logic
-import { State, userLogout, getMe,  addTodo, getTodos } from "../../libs/api";
+import { State, userLogout, getMe,  addTodo, getTodos, removeTodo } from "../../libs/api";
 import Navigation from "../../libs/navigation";
 
 // Import Actionsheet
@@ -32,7 +32,14 @@ export default class LoginScreen extends React.Component {
     }
   }
   componentDidMount () {
-    console.log('PROPS', this.props)
+    this.setState({
+      todos: State.user.todos
+    })
+  }
+  componentDidUpdate () {
+    getTodos(State.token).then(data =>  { 
+      this.setState({ todos: data.viewer.todos });
+    });
   }
   _keyExtractor = (item, index) => item.id;
   _logout () {
@@ -41,8 +48,18 @@ export default class LoginScreen extends React.Component {
   }
   _addTodo() {
     addTodo('Edit Me', 'Edit Me', State.user.id);
-    State.user.todos = getTodos(State.token);
-  } 
+    
+    getTodos(State.token).then(data =>  { 
+      this.setState({ todos: data.viewer.todos });
+    });
+  }
+  _completeTodo (todo) {
+    removeTodo(todo.id);
+    
+    getTodos(State.token).then(data =>  { 
+      this.setState({ todos: data.viewer.todos });
+    });
+  }
   _MainActionSheetController (buttonIndex) {
     switch(buttonIndex) {
         case 0:
@@ -64,9 +81,9 @@ export default class LoginScreen extends React.Component {
       <Container padder>
           <FlatList
             contentContainerStyle={styles.todoList}
-            data={State.user.todos}
+            data={this.state.todos}
             keyExtractor={this._keyExtractor}
-            renderItem={({item}) => <Todo todo={item}/>}
+            renderItem={({item}) => <Todo todo={item} onComplete={() => this._completeTodo(item)}/>}
           />
           <Button
             transparent

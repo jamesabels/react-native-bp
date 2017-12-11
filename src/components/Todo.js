@@ -47,11 +47,9 @@ export default class Todo extends React.Component {
     }
   }
   _updateTodo (todo, token) {
-    console.log('TODO...', todo);
     removeTodo(todo.id)
       .then(data => {
         addTodo(this.state.titleInput, this.state.contentInput, State.user.id);
-        State.user.todos = getTodos(State.token);
       })
     this._toggleEdit(false);
   }
@@ -65,7 +63,6 @@ export default class Todo extends React.Component {
       complete: true
     });
     removeTodo(todo.id);
-    State.user.todos = getTodos(State.token);
   }
   render() {
     if (this.state.edit) {
@@ -103,7 +100,7 @@ export default class Todo extends React.Component {
     }
     return (
       <ListItem style={styles.todo}>
-        <CheckBox checked={this.state.complete} onPress={() => this._completeTodo(this.props.todo, State.token)} />
+        <CheckBox checked={this.state.complete} onPress={() => this.props.onComplete()} />
           <Grid>
             <Left>
             <Col>
