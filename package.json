@@ -2,7 +2,7 @@
   "main": "node_modules/expo/AppEntry.js",
   "private": true,
   "dependencies": {
-    "expo": "^23.0.0",
+    "expo": "^34.0.4",
     "graphql-request": "^1.4.0",
     "native-base": "^2.3.5",
     "react": "16.0.0",
